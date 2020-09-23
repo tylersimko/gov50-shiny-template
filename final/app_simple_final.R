@@ -5,6 +5,8 @@ library(tidyverse)
 library(shiny)
 library(fec16)
 
+# this is just a normal object
+
 state.names <- c("CA", "NY", "KS")
 
 ######################################################################################
@@ -82,19 +84,41 @@ ui <- fluidPage(
     textOutput("text_message"),
     plotOutput("state_plot")
   )
+  
+  
 )
 
 server <- function(input, output, session) {
   
   
-  # Then, you use these named objects to update the data on your site via the input object.
+  # - Then, you use these named objects to update the data on your site via the input object.
+  # 
+  #   -- render() functions are what show content that will change live on your site.
+  # 
+  #   -- so here, renderText() is updating live text based on your choice.
   
   output$state_message <- renderText({
-    paste0("This is the state you chose: ", input$selected_state, "!")
+    paste0("This is the state you chose: ", # this is just a string, so it will never change
+           input$selected_state, "!")       # this is based on your input, selected_state defined above.
+  })
+  
+  output$size_message <- renderText({
+    paste0("This is the size you chose: ", # this is just a string, so it will never change
+           input$selected_size, "!")       # this is based on your input, selected_state defined above.
+  })
+  
+  output$color_message <- renderText({
+    paste0("This is the color you chose: ", # this is just a string, so it will never change
+           input$selected_color, "!")       # this is based on your input, selected_state defined above.
+  })
+  
+  output$text_message <- renderText({
+    paste0("This is the label you typed: ", # this is just a string, so it will never change
+           input$entered_text, "!")       # this is based on your input, selected_state defined above.
   })
   
   # This line makes our dataset reactive.
-    # That is, we can update it based on the values of input that define above.
+  # That is, we can update it based on the values of input that define above.
   
   results <- reactive({ results_house })
   
@@ -114,7 +138,6 @@ server <- function(input, output, session) {
       geom_point(size = input$selected_size, color = input$selected_color) + 
       labs(title = input$entered_text) + theme_bw()
   })
-  
   
 }
 

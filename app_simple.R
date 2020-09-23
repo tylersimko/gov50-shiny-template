@@ -65,23 +65,9 @@ ui <- fluidPage(
   selectInput(inputId = "selected_state",                  # a name for the value you choose here
               label = "Choose a state from this list!",    # the name to display on the slider
               choices = state.names),                      # your list of choices to choose from
-  
-  sliderInput(inputId = "selected_size",                   # a name for the value you choose here
-              label = "Choose a number as a point size:",  # the label to display above the slider
-              min = 0, max = 5, value = 2),                # the min, max, and initial values
-  
-  radioButtons(inputId = "selected_color",                 # a name for the value you choose here
-               label = "Choose a color!",                  # the label to display above the buttons
-               choices = c("red", "blue", "green")),       # the button values to choose from
-  
-  textInput(inputId = "entered_text",                      # a name for the value you choose here
-            label = "Place your title text here:",         # a label above the text box
-            value = "Example Title"),                      # an initial value for the box
 
   textOutput("state_message"), # here, we load a text object called "state_message"
-  textOutput("size_message"),
-  textOutput("color_message"),
-  textOutput("text_message")
+
 )
 
 
@@ -99,21 +85,6 @@ server <- function(input, output, session) {
   output$state_message <- renderText({
     paste0("This is the state you chose: ", # this is just a string, so it will never change
            input$selected_state, "!")       # this is based on your input, selected_state defined above.
-  })
-  
-  output$size_message <- renderText({
-    paste0("This is the size you chose: ", # this is just a string, so it will never change
-           input$selected_size, "!")       # this is based on your input, selected_state defined above.
-  })
-  
-  output$color_message <- renderText({
-    paste0("This is the color you chose: ", # this is just a string, so it will never change
-           input$selected_color, "!")       # this is based on your input, selected_state defined above.
-  })
-  
-  output$text_message <- renderText({
-    paste0("This is the label you typed: ", # this is just a string, so it will never change
-           input$entered_text, "!")       # this is based on your input, selected_state defined above.
   })
   
 }
