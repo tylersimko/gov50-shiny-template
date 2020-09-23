@@ -29,9 +29,18 @@ state.names <- c("CA", "NY", "KS")
 
 ui <- fluidPage(
   
-# - In Shiny Apps, you can print text straight to the page like this:
+# - UIs are built from "panel" functions, which specify areas of your page. 
+# 
+#   -- There is a "main panel," a "sidebar," a "title," etc.
   
-  sidebarPanel("Hello, world!"),
+  # Here is a sidebar!
+  
+  sidebarPanel("Hello, world!"), 
+  
+  
+  # And here is your "main panel" for the page.
+  
+  mainPanel(
   
 # - You can also make your UI more complicated with UI elements. 
 # 
@@ -42,23 +51,37 @@ ui <- fluidPage(
 #   -- selectInput() to choose from multiple options.
 # 
 #   -- sliderInput() lets you choose a value from a slider of values you define.
+#    
+#   -- radioButtons() let you choose a button from a number of options
+#    
+#   -- textInput() lets you enter whatever text you want.
 #
 #   -- Lots of other options, like entering a date. Look at the resources for other choices!
 #
 # - You then assign these inputs to a value and use those values in other places, like in plots!
 #
 # - All of these functions have their own arguments. For example:
+  
+  selectInput(inputId = "selected_state",                  # a name for the value you choose here
+              label = "Choose a state from this list!",    # the name to display on the slider
+              choices = state.names),                      # your list of choices to choose from
+  
+  sliderInput(inputId = "selected_size",                   # a name for the value you choose here
+              label = "Choose a number as a point size:",  # the label to display above the slider
+              min = 0, max = 5, value = 2),                # the min, max, and initial values
+  
+  radioButtons(inputId = "selected_color",                 # a name for the value you choose here
+               label = "Choose a color!",                  # the label to display above the buttons
+               choices = c("red", "blue", "green")),       # the button values to choose from
+  
+  textInput(inputId = "entered_text",                      # a name for the value you choose here
+            label = "Place your title text here:",         # a label above the text box
+            value = "Example Title"),                      # an initial value for the box
 
-
-# - There are also "panel" functions, which specify areas of your page. 
-# 
-#   -- There is a "main panel," a "sidebar," a "title," etc.
-
-mainPanel(
-  selectInput("selected_state",                  # a name for the value you choose here
-              "Choose a state from this list!",  # the name to display on the slider
-              state.names),                      # your list of choices to choose from
   textOutput("state_message"), # here, we load a text object called "state_message"
+  textOutput("size_message"),
+  textOutput("color_message"),
+  textOutput("text_message")
 )
 
 
@@ -76,6 +99,21 @@ server <- function(input, output, session) {
   output$state_message <- renderText({
     paste0("This is the state you chose: ", # this is just a string, so it will never change
            input$selected_state, "!")       # this is based on your input, selected_state defined above.
+  })
+  
+  output$size_message <- renderText({
+    paste0("This is the size you chose: ", # this is just a string, so it will never change
+           input$selected_size, "!")       # this is based on your input, selected_state defined above.
+  })
+  
+  output$color_message <- renderText({
+    paste0("This is the color you chose: ", # this is just a string, so it will never change
+           input$selected_color, "!")       # this is based on your input, selected_state defined above.
+  })
+  
+  output$text_message <- renderText({
+    paste0("This is the label you typed: ", # this is just a string, so it will never change
+           input$entered_text, "!")       # this is based on your input, selected_state defined above.
   })
   
 }

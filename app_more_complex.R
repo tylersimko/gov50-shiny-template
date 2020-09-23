@@ -27,40 +27,61 @@ state.names <- c("CA", "NY", "KS")
 
 ui <- fluidPage(
   
-  # - In Shiny Apps, you can print text straight to the page like this:
-  
-  sidebarPanel("Hello, world!"),
-  
-  # - You can also make your UI more complicated with UI elements. 
-  # 
-  #   -- In general, these are defined by functions that you give arguments to (e.g. min and max values).
-  # 
-  # - These include:
-  #   
-  #   -- selectInput() to choose from multiple options.
-  # 
-  #   -- sliderInput() lets you choose a value from a slider of values you define.
-  #
-  #   -- Lots of other options, like entering a date. Look at the resources for other choices!
-  #
-  # - You then assign these inputs to a value and use those values in other places, like in plots!
-  #
-  # - All of these functions have their own arguments. For example:
-  
-  
-  # - There are also "panel" functions, which specify areas of your page. 
+  # - UIs are built from "panel" functions, which specify areas of your page. 
   # 
   #   -- There is a "main panel," a "sidebar," a "title," etc.
   
+  # Here is a sidebar!
+  
+  sidebarPanel("Hello, world!"), 
+  
+  
+  # And here is your "main panel" for the page.
+  
   mainPanel(
-    selectInput("selected_state",                  # a name for the value you choose here
-                "Choose a state from this list!",  # the name to display on the slider
-                state.names),                      # your list of choices to choose from
+    
+    # - You can also make your UI more complicated with UI elements. 
+    # 
+    #   -- In general, these are defined by functions that you give arguments to (e.g. min and max values).
+    # 
+    # - These include:
+    #   
+    #   -- selectInput() to choose from multiple options.
+    # 
+    #   -- sliderInput() lets you choose a value from a slider of values you define.
+    #    
+    #   -- radioButtons() let you choose a button from a number of options
+    #    
+    #   -- textInput() lets you enter whatever text you want.
+    #
+    #   -- Lots of other options, like entering a date. Look at the resources for other choices!
+    #
+    # - You then assign these inputs to a value and use those values in other places, like in plots!
+    #
+    # - All of these functions have their own arguments. For example:
+    
+    selectInput(inputId = "selected_state",                  # a name for the value you choose here
+                label = "Choose a state from this list!",    # the name to display on the slider
+                choices = state.names),                      # your list of choices to choose from
+    
+    sliderInput(inputId = "selected_size",                   # a name for the value you choose here
+                label = "Choose a number as a point size:",  # the label to display above the slider
+                min = 0, max = 5, value = 2),                # the min, max, and initial values
+    
+    radioButtons(inputId = "selected_color",                 # a name for the value you choose here
+                 label = "Choose a color!",                  # the label to display above the buttons
+                 choices = c("red", "blue", "green")),       # the button values to choose from
+    
+    textInput(inputId = "entered_text",                      # a name for the value you choose here
+              label = "Place your title text here:",         # a label above the text box
+              value = "Example Title"),                      # an initial value for the box
+    
     textOutput("state_message"), # here, we load a text object called "state_message"
+    textOutput("size_message"),
+    textOutput("color_message"),
+    textOutput("text_message"),
     plotOutput("state_plot")
   )
-  
-  
 )
 
 server <- function(input, output, session) {
@@ -90,7 +111,8 @@ server <- function(input, output, session) {
       
       # this plot is just like normal!
       ggplot(aes(x = primary_percent, y = general_percent)) + 
-      geom_point()
+      geom_point(size = input$selected_size, color = input$selected_color) + 
+      labs(title = input$entered_text) + theme_bw()
   })
   
   
