@@ -1,4 +1,4 @@
-# Gov50: Shiny Example Repo
+# Gov50: Shiny Example
 
 This is a repo for our Gov 50 students to learn to make a simple Shiny App. 
 
