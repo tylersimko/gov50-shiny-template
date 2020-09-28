@@ -29,18 +29,17 @@ state.names <- c("CA", "NY", "KS")
 
 ui <- fluidPage(
   
+  navbarPage("Human Trafficking",
+  
   # - UIs are built from "panel" functions, which specify areas of your page. 
   # 
   #   -- There is a "main panel," a "sidebar," a "title," etc.
   
   # Here is a sidebar!
   
-  sidebarPanel("Hello, world!"), 
-  
-  
-  # And here is your "main panel" for the page.
-  
-  mainPanel(
+  tabPanel("Main",
+           sidebarPanel("Hello, world!"), 
+           mainPanel(
     
     # - You can also make your UI more complicated with UI elements. 
     # 
@@ -83,9 +82,11 @@ ui <- fluidPage(
     textOutput("color_message"),
     textOutput("text_message"),
     plotOutput("state_plot")
-  )
-  
-  
+  ),
+  ),
+  tabPanel("About",
+           h3("This is an About Me!"))
+ )
 )
 
 server <- function(input, output, session) {
