@@ -40,23 +40,18 @@ ui <- fluidPage(navbarPage(
     
     sidebarPanel(
       selectInput(
-        inputId = "selected_state",
-        # a name for the value you choose here
-        label = "Choose a state from this list!",
-        # the name to display on the slider
-        choices = state.names
+        inputId = "selected_state",                 # a name for the value you choose here
+        label = "Choose a state from this list!",   # the name to display on the slider
+        choices = state.names                       # your list of choices to choose from
       ),
-      # your list of choices to choose from
       
       sliderInput(
-        inputId = "selected_size",
-        # a name for the value you choose here
-        label = "Choose a number as a point size:",
-        # the label to display above the slider
-        min = 0,
+        inputId = "selected_size",                  # a name for the value you choose here
+        label = "Choose a number as a point size:", # the label to display above the slider
+        min = 0,                                    # the min, max, and initial values
         max = 5,
-        value = 2
-      )                 # the min, max, and initial values
+        value = 2 
+      )
       
     ),
     
@@ -66,7 +61,8 @@ ui <- fluidPage(navbarPage(
     mainPanel(
       # - You can also make your UI more complicated with UI elements.
       #
-      #   -- In general, these are defined by functions that you give arguments to (e.g. min and max values).
+      #   -- In general, these are defined by functions that you give arguments to 
+      #      (e.g. min and max values).
       #
       # - These include:
       #
@@ -78,32 +74,27 @@ ui <- fluidPage(navbarPage(
       #
       #   -- textInput() lets you enter whatever text you want.
       #
-      #   -- Lots of other options, like entering a date. Look at the resources for other choices!
+      #   -- Lots of other options, like entering a date. Look at the resources for 
+      #      other choices!
       #
-      # - You then assign these inputs to a value and use those values in other places, like in plots!
+      # - You then assign these inputs to a value and use those values in other places, 
+      #   like in plots!
       #
       # - All of these functions have their own arguments. For example:
       
       radioButtons(
-        inputId = "selected_color",
-        # a name for the value you choose here
-        label = "Choose a color!",
-        # the label to display above the buttons
-        choices = c("red", "blue", "green")
+        inputId = "selected_color",             # a name for the value you choose here
+        label = "Choose a color!",              # the label to display above the buttons
+        choices = c("red", "blue", "green")     # the button values to choose from
       ),
-      # the button values to choose from
       
       textInput(
-        inputId = "entered_text",
-        # a name for the value you choose here
-        label = "Place your title text here:",
-        # a label above the text box
-        value = "Example Title"
+        inputId = "entered_text",               # a name for the value you choose here
+        label = "Place your title text here:",  # a label above the text box
+        value = "Example Title"                 # an initial value for the box
       ),
-      # an initial value for the box
       
-      textOutput("state_message"),
-      # here, we load a text object called "state_message"
+      textOutput("state_message"),              # load a text object called "state_message"
       textOutput("size_message"),
       textOutput("color_message"),
       textOutput("text_message"),
