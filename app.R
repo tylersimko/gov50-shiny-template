@@ -4,9 +4,13 @@ library(tidyverse)
 library(shiny)
 library(fec16)
 
-# this is just a normal object
+# This is just a normal object
 
 state.names <- c("CA", "NY", "KS")
+
+# Make change to your dataset
+results_house <- results_house %>%
+  select(-footnotes)
 
 ######################################################################################
 ######################################################################################
